@@ -1,5 +1,6 @@
-
-
+/******************************|
+|       Trie Dictionary        |
+|******************************/
 function Trie(seed, valid){
   this.root = new Node();
   root.letter = seed;
@@ -7,11 +8,15 @@ function Trie(seed, valid){
   root.letters = createArray();
 }
 
-function Node(){
-  this.letter;
+function Node(letter, valid){
+  this.letter = letter;
   this.letters = createArray();
-  this.valid = false;
+  this.valid = valid | false;
 }
+
+/******************************|
+|       Trie Prototypes        |
+|******************************/
 
 Trie.prototype.add = function(word) {
     console.log("\nAdding the word '" + word + "'");
@@ -19,7 +24,7 @@ Trie.prototype.add = function(word) {
     var current = root;
     var match = (word[0] === current.letter);
 
-    // checks if word even bleongs in this Trie
+    // checks if word belongs in this Trie
     if(!match) {
       return false;
     }
@@ -28,28 +33,24 @@ Trie.prototype.add = function(word) {
       //console.log(word);
       // remove first letter from word (it already belongs)
       word = word.slice(1,word.length);
+      var firstLetter = word[0];
       // position of new fisrt letter
-      var position = word[0].charCodeAt(0) - 97;
+      var position = firstLetter.charCodeAt(0) - 97;
       // if position is empty, create a new node and dive in
       if(current.letters[position] === 0){
-        //console.log("New node created for: " + word[0])
-        // instantiate a temp variable
-        console.log("Creating a new node for " + word[0]);
-        var next = new Node();
+        // instantiate a next variable
+        console.log("Creating a new node for " + firstLetter);
+        var next = new Node(firstLetter);
         // set the new node's letter to the root's current letter
-        next.letter = word[0];
-        // add temp to the letters array in root
+        // add next to the letters array in root
         current.letters[position] = next;
         // go 'down' the tree one level
         current = current.letters[position];
+
       // else position is filled, shift and dive in
       } else {
         console.log("Skipping the node for   " + word[0]);
-        // // shift
-        // word = word.slice(1,word.length);
-        // // re-establish new position
-        // var position = word[0].charCodeAt(0) - 97;
-        // // dive down one level
+        // go 'down' the tree one level
         current = current.letters[position];
       }
     }
@@ -65,7 +66,7 @@ Trie.prototype.exists = function(word) {
 Trie.prototype.printPrettyTrie = function() {
     // protects the root from being smashed down to a leaf
     var current = root;
-    console.log("\nRoot: ")
+    console.log("\nPrinting DEPTH first:\n")
     console.log(current.letter + " " + (current.valid ? 'valid' : ''));
     print(current, '  ');
 };
