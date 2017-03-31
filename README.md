@@ -1,5 +1,5 @@
-#Week 10 Drill: The Mighty Trie!
-##What is a Trie?
+# The Mighty Trie!
+## What is a Trie?
 A Trie is a data structure that will store Strings in an extremely efficient manner.  Words are grouped according to shared spelling (apple and app share a-p-p,  beethoven and beech share b-e-e) and we are able to store multiple words using less repeated letters.
 
 The Trie structure resembles a tree, in that there is a `root` (beginning) that branches & branches & branches out to leaves (end.) Each branch or node is a `child` of the node above it.  Appropriately, each node that has a `child` is called a `parent`.  The root node has no parent. Leaf nodes have no children.
